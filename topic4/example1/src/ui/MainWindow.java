@@ -1,6 +1,5 @@
 package ui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 
 import ui.components.Label;
@@ -46,7 +45,16 @@ public class MainWindow extends JFrame{
     private void setLabels() {
         Label label = new Label("Curso de Programacion 2 ");
         label.setSize(new Dimension(200, 20));
-        label.setLocation(100, 20);
+        label.relativeTo(leftPanel);
+        label.setPosition("center");
+
+        Label registerLabel = new Label("Registro de usuarios ");
+        registerLabel.setSize(new Dimension(200, 20));
+    
+        double centerLocation2 = 0.5 * ((double)rightPanel.getWidth() - (double)registerLabel.getWidth()) ;
+        registerLabel.setLocation((int)centerLocation2, 20);
+
+        rightPanel.add(registerLabel);
         leftPanel.add(label);
     }
     private void setPanels() {

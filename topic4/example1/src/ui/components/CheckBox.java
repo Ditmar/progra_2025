@@ -1,24 +1,27 @@
 package ui.components;
 
-import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Point;
 
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.swing.JCheckBox;
 
 import ui.components.utils.BaseComponent;
 import ui.components.utils.Utils;
+import ui.config.ColorConfig;
 
-public class Label extends JLabel implements BaseComponent {
-    private String content;
+public class CheckBox extends JCheckBox implements BaseComponent {
+
     private Component parent;
 
-    public Label(String content) {
-        super(content);
-        this.setForeground(Color.white);
-        this.setHorizontalAlignment(SwingConstants.CENTER);
-        this.content = content;
+    public CheckBox(String label) {
+        super(label);
+        this.setStyles();
+    }
+
+    private void setStyles() {
+        this.setBackground(ColorConfig.secondary);
+        this.setSize(new Dimension(50, 50));
     }
 
     @Override
@@ -46,9 +49,5 @@ public class Label extends JLabel implements BaseComponent {
     @Override
     public void relativeTo(Component parent) {
         this.parent = parent;
-    }
-
-    public String getContent() {
-        return this.content;
     }
 }

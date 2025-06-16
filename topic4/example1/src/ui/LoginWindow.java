@@ -1,12 +1,11 @@
 package ui;
 
-import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Point;
 
 import ui.components.Button;
 import ui.components.CheckBox;
 import ui.components.ComboBox;
+import ui.components.Image;
 import ui.components.Label;
 import ui.components.Panel;
 import ui.components.PasswordField;
@@ -17,15 +16,22 @@ import javax.swing.JFrame;
 
 import ui.config.ColorConfig;
 import ui.config.Config;
+import ui.config.ImagePath;
 import ui.config.Pointer;
 import ui.config.Typography;
 
-public class MainWindow extends JFrame {
+import bussines.interfaces.HandlerLogin;
+import bussines.model.Credential;
+
+public class LoginWindow extends JFrame {
     private String title;
     private Dimension dimension;
     private Panel leftPanel, rightPanel;
+    private HandlerLogin handlerLogin;
+    private TextField username;
+    private PasswordField password;
 
-    public MainWindow(String title) {
+    public LoginWindow(String title) {
         super(title);
         this.title = title;
         this.dimension = new Dimension(Config.WIDTH, Config.HEIGHT);
@@ -33,7 +39,7 @@ public class MainWindow extends JFrame {
         this.initUi();
     }
 
-    public MainWindow(String title, Dimension dimension) {
+    public LoginWindow(String title, Dimension dimension) {
         super(title);
         this.title = title;
         this.dimension = dimension;
@@ -50,6 +56,10 @@ public class MainWindow extends JFrame {
         this.setVisible(true);
     }
 
+    public void setOnLoginCallBack(HandlerLogin handlerLogin) {
+        this.handlerLogin = handlerLogin;
+    }
+
     private void initUi() {
         setPanels();
         setLabels();
@@ -57,6 +67,7 @@ public class MainWindow extends JFrame {
         setCombo();
         setButtons();
         setCheckBox();
+        setImages();
 
     }
 
@@ -92,14 +103,14 @@ public class MainWindow extends JFrame {
     }
 
     private void setTextFields() {
-        TextField textField = new TextField("Nombre de usuario");
-        textField.relativeTo(rightPanel);
-        textField.setPosition("center", 100);
-        PasswordField passwordField2 = new PasswordField("Password");
-        passwordField2.relativeTo(rightPanel);
-        passwordField2.setPosition("center", 150);
-        rightPanel.add(textField);
-        rightPanel.add(passwordField2);
+        username = new TextField("Nombre de usuario");
+        username.relativeTo(rightPanel);
+        username.setPosition("center", 100);
+        password = new PasswordField("Password");
+        password.relativeTo(rightPanel);
+        password.setPosition("center", 150);
+        rightPanel.add(username);
+        rightPanel.add(password);
 
     }
 
@@ -120,7 +131,8 @@ public class MainWindow extends JFrame {
         button.setPosition("center", 260);
         button.setCursor(Pointer.HAND_CURSOR);
         button.addActionListener((event) -> {
-            System.out.println("Click");
+            Credential credential = new Credential(this.username.getText(), this.password.getText());
+            this.handlerLogin.clickLogin(credential);
         });
         rightPanel.add(button);
     }
@@ -137,6 +149,15 @@ public class MainWindow extends JFrame {
         ButtonGroup group = new ButtonGroup();
         group.add(checkbox);
         group.add(checkboxNo);
+    }
+
+    private void setImages() {
+        // ImageIcon icon = new ImageIcon(ImagePath.mainHero);
+        Image image = new Image(ImagePath.mainHero);
+        image.relativeTo(leftPanel);
+        image.setLocation(0, 0);
+        image.setSize(new Dimension(700, 600));
+        leftPanel.add(image);
     }
 
     public String getTitle() {

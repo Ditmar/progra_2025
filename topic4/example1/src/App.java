@@ -1,13 +1,8 @@
-import javax.swing.SwingUtilities;
-
-import ui.MainWindow;
+import bussines.LoginManagement;
 
 public class App {
-    public static void main(String[] args) { 
+    public static void main(String[] args) {
 
-        //UiThread thread = new UiThread();
-        SwingUtilities.invokeLater(() -> {
-            new MainWindow("Hola Mundo");
-        });
+        new LoginManagement();
     }
 }
